@@ -1,0 +1,24 @@
+<div>
+  <h2>Nouveau Post</h2>
+
+  <form #newPostForm="ngForm" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col">
+        <label for="titre">Titre</label>
+        <input type="text" class="form-control" name="titre" id="titre" placeholder="Donner un titre à votre post"
+          [(ngModel)]="post.title" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="contenu">Contenu</label>
+        <textarea class="form-control" name="contenu" id="contenu" placeholder="Rédiger un contenu"
+          [(ngModel)]="post.content" required></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><button type="submit" class="btn btn-primary my-1"
+          [disabled]="newPostForm.invalid">Soumettre</button></div>
+    </div>
+  </form>
+</div>

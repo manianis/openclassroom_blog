@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { post } from 'selenium-webdriver/http';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Post from '../models/post';
 
 @Component({
@@ -10,6 +9,8 @@ import Post from '../models/post';
 export class PostListItemComponent implements OnInit {
 
   @Input() post: Post;
+  @Output() onRemove = new EventEmitter();
+  @Output() onLoveIt = new EventEmitter();
 
   constructor() { }
 
@@ -17,7 +18,11 @@ export class PostListItemComponent implements OnInit {
   }
 
   increase(byCount: number) {
-    this.post.loveIts += byCount;
+    this.onLoveIt.emit({ id: this.post.id, loveIts: this.post.loveIts + byCount });
+  }
+
+  removeItem(id: number) {
+    this.onRemove.emit('' + id);
   }
 
 }

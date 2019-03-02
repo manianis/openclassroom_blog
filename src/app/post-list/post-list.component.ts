@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Post from '../models/post';
+import { PostsService } from '../posts.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'post-list',
@@ -8,11 +10,28 @@ import Post from '../models/post';
 })
 export class PostListComponent implements OnInit {
 
-  @Input() posts: Post[];
+  posts: Post[] = [];
+  postsSubscription: Subscription;
 
-  constructor() { }
+  constructor(private postsService: PostsService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.postsSubscription = this.postsService.postsSubject.subscribe((posts: Post[]) => {
+      this.posts = posts;
+    });
+    this.postsService.emitPostSubject();
+  }
+
+  ngOnDestroy(): void {
+    this.postsSubscription.unsubscribe();
+  }
+
+  removePost(id) {
+    this.postsService.removePost(+id);
+  }
+
+  loveIts(event) {
+    this.postsService.setLoveIts(event.id, event.loveIts);
   }
 
 }

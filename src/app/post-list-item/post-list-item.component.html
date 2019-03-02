@@ -1,6 +1,10 @@
-<li
+<li class="mb-1"
   [ngClass]="{'list-group-item': true, 'list-group-item-success': post.loveIts > 0, 'list-group-item-danger': post.loveIts < 0}">
-  <h2>{{post.title}}</h2>
+  <div class="row">
+    <h2 class="col-sm-6">{{post.title}}</h2>
+    <div class="col-sm-5 text-right">{{post.created_at | date: 'dd/MM/yyyy hh:mm'}}</div>
+    <div class="col-sm-1 text-right"><a routerLink="" (click)="removeItem(post.id)">&times;</a></div>
+  </div>
   <p>{{ post.content }}</p>
   <div>
     <small>Nombre de likes : {{ post.loveIts }}</small>
